@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}Edit Post{% endblock %}
 
 {% block body %}
 <div class="row">
-  <h1 class="text-center">Create A New Post</h1>
-  <form method="POST" action="{{ url_for('new_post') }}">
+  <h1 class="text-center">Edit The Post</h1>
+  <form method="POST" action="{{ url_for('blog.edit_post', id=post.id) }}">
     {{ form.hidden_tag() }}
     <div class="form-group">
       {{ form.title.label }}
@@ -14,7 +14,7 @@
           <p class="help-block">{{ e }}</p>
         {% endfor %}
       {% endif %}
-      {{ form.title(class_='form-control') }}
+      {{ form.title(class_='form-control', value=post.title) }}
     </div>
     <div class="form-gruop">
       {{ form.text.label }}
@@ -29,6 +29,7 @@
   </form>
 </div>
 {% endblock %}
+
 
 {% block js %}
 <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>

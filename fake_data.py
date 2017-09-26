@@ -1,9 +1,7 @@
 import datetime
 import random
-from uuid import uuid4
 
-from models import db, User, Tag, Post
-
+from zoulalablog import db, User, Tag, Post
 
 user = db.session.query(User).filter_by(id=3).first()
 tag_one = Tag('Flask')

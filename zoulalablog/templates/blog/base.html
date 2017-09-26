@@ -13,7 +13,7 @@
     <nav>
       <ul class="pagination">
         <li>
-          <a href="{{ url_for('home', page=pagination.prev().page)
+          <a href="{{ url_for('blog.home', page=pagination.prev().page)
             }}" aria-label="Previous">
             <span aria-label="true">&laquo;</span>
           </a>
@@ -34,7 +34,7 @@
           {% endif %}
         {% endfor %}
         <li>
-          <a href="{{ url_for('home', page=pagination.next().page )
+          <a href="{{ url_for('blog.home', page=pagination.next().page )
             }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
@@ -48,7 +48,7 @@
   <div class="container">
     <div class="jumbotron">
       <!-- Replace the route function to URL: `/` -->
-      <h1><a href="{{ url_for('home')}} ">ZouLaLa's Blog</a></h1>
+      <h1><a href="{{ url_for('blog.home')}} ">ZouLaLa's Blog</a></h1>
         <p>Welcome to the blog!</p>
     </div>
 

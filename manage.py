@@ -1,8 +1,17 @@
-from flask_script import Manager,Server
-from flask_migrate import Migrate,MigrateCommand
 
-from main import app
-import models
+import os
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager, Server
+
+from zoulalablog import create_app
+from zoulalablog import models
+
+# Get the ENV from os_environ, default app.config='Dev'+'Config'
+env = os.environ.get('BLOG_ENV', 'Dev')
+# Create the app instance via Factory Method
+app = create_app('zoulalablog.config.%sConfig' % env.capitalize())
+
+
 
 manager = Manager(app)  # init project's manager tool
 migrate = Migrate(app, models.db)  # init db's advance tool

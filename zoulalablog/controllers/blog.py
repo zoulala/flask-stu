@@ -1,17 +1,19 @@
 import datetime
-from config import DevConfig
-from flask import Flask,render_template,url_for,redirect
-from models import db,User,Post,Tag,posts_tags,Comment
+from os import path
 
 from sqlalchemy import func
-from forms import PostForm,CommentForm
+from flask import render_template, url_for, redirect, Blueprint
 
 
+from zoulalablog.forms import PostForm, CommentForm
+from zoulalablog.models import db, User, Post, Tag, posts_tags, Comment
 
-app = Flask(__name__)
-app.config.from_object(DevConfig)
-
-db.init_app(app)
+blog_blueprint = Blueprint(
+    'blog',
+    __name__,
+    template_folder = path.join(path.pardir,'templates/blog'),
+    url_prefix = '/blog'
+)
 
 
 
@@ -33,8 +35,8 @@ def sidebar_data():
 
 
 
-@app.route('/')
-@app.route('/<int:page>')
+@blog_blueprint.route('/')
+@blog_blueprint.route('/<int:page>')
 def home(page=1):
     """View function for home page"""
 
@@ -49,7 +51,7 @@ def home(page=1):
                            recent=recent,
                            top_tags=top_tags)
 
-@app.route('/post/<int:post_id>', methods=('GET', 'POST'))
+@blog_blueprint.route('/post/<int:post_id>', methods=('GET', 'POST'))
 def post(post_id):
 
     # Form object: `Comment`
@@ -80,7 +82,7 @@ def post(post_id):
                            recent=recent,
                            top_tags=top_tags)
 
-@app.route('/tag/<string:tag_name>')
+@blog_blueprint.route('/tag/<string:tag_name>')
 def tag(tag_name):
     """View function for tag page"""
 
@@ -94,7 +96,7 @@ def tag(tag_name):
                            recent=recent,
                            top_tags=top_tags)
 
-@app.route('/user/<string:username>')
+@blog_blueprint.route('/user/<string:username>')
 def user(username):
     """View function for user page"""
     user = db.session.query(User).filter_by(username=username).first_or_404()
@@ -107,7 +109,7 @@ def user(username):
                            recent=recent,
                            top_tags=top_tags)
 
-@app.route('/new', methods=['GET', 'POST'])
+@blog_blueprint.route('/new', methods=['GET', 'POST'])
 def new_post():
     """View function for new_port."""
 
@@ -121,13 +123,13 @@ def new_post():
 
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('blog.home'))
 
     return render_template('new_post.html',
                            form=form)
 
 
-@app.route('/edit/<string:id>', methods=['GET', 'POST'])
+@blog_blueprint.route('/edit/<string:id>', methods=['GET', 'POST'])
 def edit_post(id):
     """View function for edit_post."""
     post = Post.query.get_or_404(id)
@@ -154,5 +156,4 @@ def edit_post(id):
 
 
 
-if __name__ == "__main__":
-    app.run()
+

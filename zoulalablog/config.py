@@ -1,3 +1,4 @@
+from os import path
 
 class Config(object):
     """Base config class."""
@@ -16,4 +17,15 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:560320@localhost:3306/flask_stu'
     # SQLite connection
     #SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
+
+class Dev2Config(Config):
+    """Development config class."""
+    # Open the DEBUG
+    DEBUG = True
+
+    # MySQL connection
+    #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:560320@localhost:3306/flask_stu'
+    # SQLite connection
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'+path.join(path.pardir,'database.db')
+
 
