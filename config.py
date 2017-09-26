@@ -1,7 +1,7 @@
 
 class Config(object):
     """Base config class."""
-    pass
+    SECRET_KEY = '29693eaa35867118e267082e9060d194'
 
 class ProdConfig(Config):
     """Production config class."""
