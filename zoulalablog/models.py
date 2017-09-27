@@ -1,6 +1,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 
+from zoulalablog.extensions import bcrypt
 
 db = SQLAlchemy()
 
@@ -17,6 +18,7 @@ class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(255))
     password = db.Column(db.String(255))
+
     posts = db.relationship('Post',
                             backref='users',
                             lazy='dynamic')
@@ -28,6 +30,14 @@ class User(db.Model):
     def __repr__(self):
         """Define the string format for instance of User."""
         return "<Model User `{}`>".format(self.username)
+
+    def set_password(self, password):
+        """Convert the password to cryptograph via flask-bcrypt"""
+        self.password = bcrypt.generate_password_hash(password)
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.password, password)
+
 
 
 class Post(db.Model):

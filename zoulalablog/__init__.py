@@ -2,8 +2,9 @@
 from flask import Flask, redirect, url_for
 
 from zoulalablog.config import DevConfig,Dev2Config
-from zoulalablog.controllers import blog
+from zoulalablog.controllers import blog,main
 from zoulalablog.models import db
+from zoulalablog.extensions import bcrypt
 
 def create_app(object_name):
 
@@ -12,6 +13,7 @@ def create_app(object_name):
     app.config.from_object(object_name)
 
     db.init_app(app)
+    bcrypt.init_app(app)
 
     @app.route('/')
     def index():
@@ -19,6 +21,7 @@ def create_app(object_name):
 
 
     app.register_blueprint(blog.blog_blueprint)
+    app.register_blueprint(main.main_blueprint)
     return app
 
 if __name__ == "__main__":

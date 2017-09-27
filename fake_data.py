@@ -1,7 +1,7 @@
 import datetime
 import random
 
-from zoulalablog import db, User, Tag, Post
+from zoulalablog.models import db, User, Tag, Post
 
 user = db.session.query(User).filter_by(id=3).first()
 tag_one = Tag('Flask')
