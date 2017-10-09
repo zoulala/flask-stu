@@ -15,6 +15,7 @@ def create_app(object_name):
     db.init_app(app)
     bcrypt.init_app(app)
 
+
     @app.route('/')
     def index():
         return redirect(url_for('blog.home'))

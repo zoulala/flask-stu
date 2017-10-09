@@ -2,7 +2,7 @@ import datetime
 from os import path
 
 from sqlalchemy import func
-from flask import render_template, url_for, redirect, Blueprint
+from flask import render_template, url_for, redirect, Blueprint,session
 
 
 from zoulalablog.forms import PostForm, CommentForm
@@ -114,6 +114,9 @@ def new_post():
     """View function for new_port."""
 
     form = PostForm()
+
+    if 'username' not in session:
+        return redirect(url_for('main.login'))
 
     # Will be execute when click the submit in the create a new post page.
     if form.validate_on_submit():

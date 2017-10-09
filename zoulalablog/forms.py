@@ -3,7 +3,7 @@ from wtforms import (StringField,
                      TextAreaField,
                      PasswordField,
                      BooleanField)
-from wtforms.validators import DataRequired, Length,EqualTo,URL
+from wtforms.validators import DataRequired, Length,EqualTo
 
 from zoulalablog.models import User
 
@@ -77,4 +77,7 @@ class RegisterForm(FlaskForm):
             self.username.errors.append('User with that name already exists.')
             return False
         return True
+
+
+
 

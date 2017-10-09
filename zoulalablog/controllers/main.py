@@ -1,12 +1,12 @@
 from os import path
-from uuid import uuid4
 
-from flask import flash, url_for, redirect, render_template, Blueprint
+
+from flask import flash, url_for, redirect, render_template, Blueprint,session
 from flask_login import login_user, logout_user
 from flask_principal import Identity, AnonymousIdentity, identity_changed, current_app
 
-from zoulalablog.forms import LoginForm, RegisterForm
 
+from zoulalablog.forms import LoginForm, RegisterForm
 from zoulalablog.models import db, User
 
 
@@ -29,18 +29,19 @@ def login():
     form = LoginForm()
 
 
+
     # Will be check the account whether rigjt.
     if form.validate_on_submit():
 
         # Using session to check the user's login status
         # Add the user's name to cookie.
-        # session['username'] = form.username.data
+        session['username'] = form.username.data
 
         flash("You have been logged in.", category="success")
         return redirect(url_for('blog.home'))
 
     return render_template('login.html',
-                           form=form
+                           form=form,
                            )
 
 
@@ -48,7 +49,7 @@ def login():
 def logout():
     """View function for logout."""
     # Remove the username from the cookie.
-    # session.pop('username', None)
+    session.pop('username', None)
 
     flash("You have been logged out.", category="success")
     return redirect(url_for('main.login'))
@@ -60,6 +61,7 @@ def register():
 
     # Create the form object for RegisterForm.
     form = RegisterForm()
+
 
     # Will be check the username whether exist.
     if form.validate_on_submit():
@@ -76,3 +78,5 @@ def register():
     return render_template('register.html',
                            form=form
                             )
+
+
