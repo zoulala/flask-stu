@@ -3,7 +3,6 @@ from os import path
 
 from flask import flash, url_for, redirect, render_template, Blueprint,session
 from flask_login import login_user, logout_user
-from flask_principal import Identity, AnonymousIdentity, identity_changed, current_app
 
 
 from zoulalablog.forms import LoginForm, RegisterForm
@@ -35,7 +34,14 @@ def login():
 
         # Using session to check the user's login status
         # Add the user's name to cookie.
-        session['username'] = form.username.data
+        # session['username'] = form.username.data
+
+        user = User.query.filter_by(username=form.username.data).one()
+
+        # Using the Flask-Login to processing and check the login status for user
+        # Remember the user's login status.
+        login_user(user, remember=form.remember.data)
+
 
         flash("You have been logged in.", category="success")
         return redirect(url_for('blog.home'))
@@ -49,7 +55,11 @@ def login():
 def logout():
     """View function for logout."""
     # Remove the username from the cookie.
-    session.pop('username', None)
+    # session.pop('username', None)
+
+    # Using the Flask-Login to processing and check the logout status for user.
+    logout_user()
+
 
     flash("You have been logged out.", category="success")
     return redirect(url_for('main.login'))

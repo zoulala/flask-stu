@@ -4,7 +4,7 @@ from flask import Flask, redirect, url_for
 from zoulalablog.config import DevConfig,Dev2Config
 from zoulalablog.controllers import blog,main
 from zoulalablog.models import db
-from zoulalablog.extensions import bcrypt
+from zoulalablog.extensions import bcrypt,login_manager
 
 def create_app(object_name):
 
@@ -14,6 +14,7 @@ def create_app(object_name):
 
     db.init_app(app)
     bcrypt.init_app(app)
+    login_manager.init_app(app)
 
 
     @app.route('/')

@@ -4,6 +4,7 @@ from os import path
 from sqlalchemy import func
 from flask import render_template, url_for, redirect, Blueprint,session
 
+from flask_login import login_required
 
 from zoulalablog.forms import PostForm, CommentForm
 from zoulalablog.models import db, User, Post, Tag, posts_tags, Comment
@@ -110,13 +111,14 @@ def user(username):
                            top_tags=top_tags)
 
 @blog_blueprint.route('/new', methods=['GET', 'POST'])
+@login_required
 def new_post():
     """View function for new_port."""
 
     form = PostForm()
 
-    if 'username' not in session:
-        return redirect(url_for('main.login'))
+    # if 'username' not in session:
+    #     return redirect(url_for('main.login'))
 
     # Will be execute when click the submit in the create a new post page.
     if form.validate_on_submit():
