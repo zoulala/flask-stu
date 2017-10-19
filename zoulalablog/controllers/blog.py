@@ -45,10 +45,15 @@ def home(page=1):
         Post.publish_date.desc()
     ).paginate(page, 10)
 
+    users = User.query.order_by(
+        User.id
+    ).all()
+
     recent, top_tags = sidebar_data()
 
     return render_template('home.html',
                            posts=posts,
+                           users=users,
                            recent=recent,
                            top_tags=top_tags)
 

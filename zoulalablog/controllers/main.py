@@ -16,9 +16,9 @@ main_blueprint = Blueprint(
     template_folder=path.join(path.pardir, 'templates','main')
     )
 
-@main_blueprint.route('/')
-def index():
-    return redirect(url_for('blog.home'))
+# @main_blueprint.route('/')
+# def index():
+#     return redirect(url_for('blog.home',page=3))
 
 @main_blueprint.route('/login', methods=['GET', 'POST'])
 def login():

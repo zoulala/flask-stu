@@ -19,7 +19,7 @@ def create_app(object_name):
 
     @app.route('/')
     def index():
-        return redirect(url_for('blog.home'))
+        return redirect(url_for('blog.home',page=3))
 
 
     app.register_blueprint(blog.blog_blueprint)
@@ -30,4 +30,5 @@ if __name__ == "__main__":
 
     app = create_app(DevConfig)
     #app = create_app(Dev2Config)
+
     app.run()
